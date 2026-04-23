@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: visualization1-dashboard
+    runtime: python
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server

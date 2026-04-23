@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: alipay-payment-dashboard
+    name: visualization2-dashboard
     runtime: python
     envVars:
       - key: PYTHON_VERSION
