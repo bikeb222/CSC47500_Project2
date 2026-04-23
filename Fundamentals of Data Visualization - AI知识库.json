@@ -1,0 +1,747 @@
+{
+  "metadata": {
+    "title": "Fundamentals of Data Visualization - AI知识库",
+    "source_file": "C:\\Users\\65413\\Desktop\\CSC47500\\books\\book1\\Fundamentals of Data Visualization.md",
+    "derived_from": "C:\\Users\\65413\\Desktop\\CSC47500\\books\\book1\\Fundamentals of Data Visualization - AI结构化总结.md",
+    "language": "zh-CN",
+    "domain": "static_data_visualization",
+    "intended_uses": [
+      "RAG知识库",
+      "图表类型选择",
+      "图表审查",
+      "可视化规范生成",
+      "提示词参考"
+    ],
+    "schema_version": "1.0.0"
+  },
+  "book_summary": {
+    "thesis": [
+      "数据可视化既是科学也是艺术。",
+      "可视化首先必须真实，其次才追求美观。",
+      "图表类型应由想表达的消息决定，而不是由数据表面形式决定。",
+      "设计元素应服务于理解，而不是服务于装饰。"
+    ],
+    "rating_system": {
+      "ugly": "数学上未必错误，但审美和版面设计较差，影响阅读体验。",
+      "bad": "感知层面存在问题，可能导致理解困难、比较困难或形成误导。",
+      "wrong": "数学或编码关系错误，图形与数据的对应关系客观不成立。"
+    },
+    "parts": [
+      {
+        "name": "从数据到图形",
+        "focus": "图表类型与信息表达"
+      },
+      {
+        "name": "图形设计原则",
+        "focus": "颜色、标签、面板、冗余编码、比例墨水等"
+      },
+      {
+        "name": "其他主题",
+        "focus": "文件格式、软件选择、讲故事、图表在文档中的使用"
+      }
+    ]
+  },
+  "foundational_concepts": {
+    "visual_mapping": {
+      "definition": "数据可视化的本质是把数据值映射到图形属性。",
+      "aesthetics": [
+        "position",
+        "shape",
+        "size",
+        "color",
+        "line_width",
+        "line_type",
+        "font_family",
+        "font_face",
+        "font_size",
+        "alpha"
+      ]
+    },
+    "data_types": {
+      "quantitative_continuous": "连续数值，例如温度、身高、时长。",
+      "quantitative_discrete": "离散数值，例如人数、件数。",
+      "qualitative_unordered": "无序类别，例如国家、品牌、物种。",
+      "qualitative_ordered": "有序类别，例如差、中、好。",
+      "date_time": "可连续也可离散，取决于粒度。",
+      "text": "通常不直接作为数值尺度，必要时可转为类别。"
+    },
+    "aesthetic_compatibility": {
+      "continuous_friendly": [
+        "position",
+        "size",
+        "color",
+        "line_width"
+      ],
+      "discrete_friendly": [
+        "shape",
+        "line_type"
+      ]
+    },
+    "scale": {
+      "definition": "scale 是数据值到图形属性值的映射规则。",
+      "requirements": [
+        "映射应尽量一一对应",
+        "不能制造歧义",
+        "应让读者能稳定解码"
+      ]
+    }
+  },
+  "coordinates_and_axes": {
+    "cartesian": {
+      "definition": "最常见的2D坐标系统，用x和y两条轴表示位置。",
+      "principles": [
+        "轴范围和刻度影响阅读感知。",
+        "当x和y表示相同单位时，应保持等比例。",
+        "当x和y单位不同，可以调整长宽比来强调不同方向的变化。"
+      ]
+    },
+    "nonlinear_axes": {
+      "common_type": "log_scale",
+      "use_cases": [
+        "跨数量级数据",
+        "指数增长",
+        "偏态分布",
+        "倍数关系比较"
+      ],
+      "risks": [
+        "读者可能误把对数轴当线性轴",
+        "不适合大量零值或负值场景，除非解释清楚"
+      ]
+    },
+    "general_rules": [
+      "坐标系的几何安排会影响任务难度。",
+      "选择坐标系时要考虑读者如何比较位置。"
+    ]
+  },
+  "color_system": {
+    "main_uses": [
+      "区分类别",
+      "表示数值",
+      "高亮重点"
+    ],
+    "qualitative_scale": {
+      "for": "无序类别",
+      "requirements": [
+        "颜色之间可区分",
+        "不要形成伪顺序",
+        "不要让某个颜色过分突出"
+      ]
+    },
+    "sequential_scale": {
+      "for": "连续数值",
+      "requirements": [
+        "顺序清晰",
+        "感知变化尽量均匀",
+        "高低关系可直观判断"
+      ]
+    },
+    "diverging_scale": {
+      "for": "存在中心参考点的数值",
+      "examples": [
+        "正负变化",
+        "偏离平均值",
+        "盈亏",
+        "温度异常"
+      ]
+    },
+    "highlighting": {
+      "principle": "大多数元素中性化，仅让关键元素使用强调色。",
+      "recommended_default": "非重点对象用灰色，重点对象用少量高饱和色。"
+    },
+    "pitfalls": [
+      "给太多类别上不同颜色",
+      "使用彩虹色带表示连续变量",
+      "使用非单调色带编码数值",
+      "颜色过饱和",
+      "未考虑色觉缺陷"
+    ],
+    "rules_of_thumb": [
+      "分类颜色最好控制在3到5类。",
+      "超过8类后，颜色图例匹配会明显变差。",
+      "对象太多时优先直接标注、分面、位置分组或冗余编码。"
+    ]
+  },
+  "chart_families": {
+    "amounts": {
+      "goal": "比较不同类别上的数值大小",
+      "recommended_charts": [
+        "bar_plot",
+        "dot_plot",
+        "heatmap"
+      ],
+      "key_rules": [
+        "条形图在线性尺度上应从0开始。",
+        "长标签优先改为横向条形图。",
+        "点图是条形图的高效替代方案。",
+        "热图适合双离散坐标上的数值矩阵。"
+      ],
+      "pitfalls": [
+        "条形图截断零点",
+        "旋转过长标签导致难读",
+        "堆叠过多部分导致中间段难比较"
+      ]
+    },
+    "distributions": {
+      "goal": "展示变量如何分布",
+      "single_distribution": {
+        "histogram": {
+          "strengths": [
+            "直观",
+            "适合看偏态、峰数、集中趋势"
+          ],
+          "limitations": [
+            "依赖箱宽"
+          ]
+        },
+        "density_plot": {
+          "strengths": [
+            "平滑",
+            "适合连续变量"
+          ],
+          "limitations": [
+            "依赖带宽",
+            "是解释而非原始数据本身"
+          ]
+        },
+        "ecdf": {
+          "strengths": [
+            "不依赖箱宽或带宽",
+            "展示全部数据",
+            "适合读分位数和阈值以下比例"
+          ],
+          "limitations": [
+            "对非统计受众不如直方图直观"
+          ]
+        },
+        "qq_plot": {
+          "goal": "比较两个分布的形态或对照理论分布"
+        }
+      },
+      "multiple_distributions": {
+        "boxplot": {
+          "strengths": [
+            "紧凑",
+            "适合同时比较很多组",
+            "展示中位数、四分位、离群点"
+          ],
+          "limitations": [
+            "不显示真实多峰结构"
+          ]
+        },
+        "violin_plot": {
+          "strengths": [
+            "展示分布形状",
+            "比箱线图信息更丰富"
+          ],
+          "limitations": [
+            "仍依赖密度估计"
+          ]
+        },
+        "ridgeline_plot": {
+          "strengths": [
+            "适合很多分布沿顺序变量变化"
+          ],
+          "limitations": [
+            "不适合精确读取",
+            "容易走向装饰化"
+          ]
+        }
+      },
+      "anti_pattern": "不要只用均值加对称误差线代替完整分布。"
+    },
+    "proportions": {
+      "goal": "表达整体如何被分成若干部分",
+      "charts": {
+        "pie_chart": {
+          "works_well_when": [
+            "类别很少",
+            "重点是简单分数关系",
+            "想突出是否过半、三分之一、四分之一"
+          ],
+          "works_poorly_when": [
+            "类别很多",
+            "需要跨时间比较",
+            "需要精确比较相近比例"
+          ]
+        },
+        "stacked_bar": {
+          "works_well_when": [
+            "强调整体由几部分组成",
+            "只有两个部分时效果较好"
+          ],
+          "works_poorly_when": [
+            "中间部分需要精确比较",
+            "很多时点或很多组连续比较"
+          ]
+        },
+        "side_by_side_bar": {
+          "works_well_when": [
+            "直接比较各部分大小",
+            "比较同一类别在不同时间或条件下变化"
+          ],
+          "tradeoff": "整体-部分关系不如饼图和堆叠图直观。"
+        },
+        "partial_density": {
+          "works_well_when": [
+            "既想看部分，也想保留总体背景"
+          ]
+        }
+      }
+    },
+    "nested_proportions": {
+      "goal": "展示多个分类变量共同划分总体后的结构",
+      "recommended_charts": [
+        "mosaic_plot",
+        "treemap",
+        "parallel_sets",
+        "nested_pie"
+      ],
+      "mosaic_plot": {
+        "requirements": [
+          "各分类变量都覆盖全体样本",
+          "组合关系清晰"
+        ],
+        "strengths": [
+          "强调交叉结构"
+        ]
+      },
+      "treemap": {
+        "strengths": [
+          "适合层次结构",
+          "空间利用率高"
+        ],
+        "limitations": [
+          "不同矩形比较仍然不容易"
+        ]
+      },
+      "pitfalls": [
+        "把互相重叠的分类直接塞进一个饼图",
+        "用普通条形图展示重叠类别却不说明交叉关系"
+      ]
+    },
+    "relationships": {
+      "goal": "展示两个或多个定量变量的关系",
+      "recommended_charts": [
+        "scatter_plot",
+        "scatterplot_matrix",
+        "correlogram",
+        "dimension_reduction_plot"
+      ],
+      "scatter_plot": {
+        "why": "位置是最容易比较的编码方式。"
+      },
+      "bubble_chart": {
+        "warning": "用大小编码额外变量时，读者更难准确判断差异。"
+      },
+      "paired_data": {
+        "recommended_charts": [
+          "connected_dot_plot",
+          "slope_graph",
+          "paired_scatter"
+        ]
+      }
+    },
+    "time_series": {
+      "goal": "展示有序自变量上的变化，通常是时间",
+      "recommended_charts": [
+        "line_graph",
+        "point_plus_line",
+        "area_chart",
+        "small_multiples"
+      ],
+      "rules": [
+        "线的作用是强调相邻观测之间的顺序。",
+        "时间点稀疏时可同时显示点和线。",
+        "时间点密集时可只画线。",
+        "面积图只有在y轴从0开始时才成立。"
+      ]
+    },
+    "trends": {
+      "goal": "强调长期模式而弱化噪声",
+      "methods": {
+        "moving_average": {
+          "strengths": [
+            "简单",
+            "容易理解"
+          ],
+          "limitations": [
+            "依赖窗口大小",
+            "可能滞后",
+            "边界缺失"
+          ]
+        },
+        "loess": {
+          "strengths": [
+            "视觉上自然",
+            "常能得到令人满意的平滑趋势"
+          ],
+          "limitations": [
+            "依赖参数",
+            "对大数据较慢",
+            "不同设置可能得出不同趋势感"
+          ]
+        },
+        "splines_and_gam": {
+          "strengths": [
+            "灵活",
+            "可高效拟合"
+          ],
+          "limitations": [
+            "模型和结点选择会显著影响结果"
+          ]
+        },
+        "explicit_models": {
+          "principle": "若已知机制，优先使用可解释的函数形式。"
+        }
+      },
+      "important_rules": [
+        "不要把默认平滑结果当作唯一真实趋势。",
+        "常常对变换后的数据拟合直线，比直接拟合复杂非线性曲线更稳。"
+      ],
+      "extras": [
+        "detrending",
+        "time_series_decomposition"
+      ]
+    },
+    "geospatial": {
+      "goal": "在地理空间背景中展示数据",
+      "concepts": [
+        "projection",
+        "layers",
+        "choropleth",
+        "cartogram"
+      ],
+      "critical_rules": [
+        "地图投影一定带来失真。",
+        "比较面积时要警惕Mercator投影。",
+        "choropleth更适合比例、率和密度，而不是总量。"
+      ]
+    },
+    "uncertainty": {
+      "goal": "表达估计、概率或模型的不确定性",
+      "recommended_charts": [
+        "error_bars",
+        "confidence_bands",
+        "quantile_dotplot",
+        "posterior_density",
+        "hypothetical_outcome_plot"
+      ],
+      "core_concepts": {
+        "sd": "标准差，描述个体观测的离散程度。",
+        "se": "标准误，描述估计值的精度。",
+        "ci": "置信区间，频率学派意义下的区间。",
+        "credible_interval": "贝叶斯可信区间，直接表达参数大概率所在范围。"
+      },
+      "rules": [
+        "使用误差线时必须明确说明它表示SD、SE还是CI，以及置信水平。",
+        "不要混淆标准差和标准误。",
+        "大众传播场景中，频率化表达和quantile dotplot通常更直观。"
+      ],
+      "curve_fit_uncertainty": [
+        "置信带不是简单上下平移。",
+        "非线性拟合的不确定性通常表现为更多可能的弯曲形状。"
+      ]
+    }
+  },
+  "design_principles": {
+    "proportional_ink": {
+      "definition": "图中阴影面积、长度等视觉量必须与其代表的数据值成比例。",
+      "rules": [
+        "线性尺度上的条形图必须从0开始。",
+        "面积图的基线应为0。",
+        "任何面积编码都应确保面积比例正确。"
+      ]
+    },
+    "overplotting": {
+      "problem_sources": [
+        "样本量过大",
+        "数值被取整或低精度记录",
+        "多个点完全重合"
+      ],
+      "solutions": [
+        "alpha_transparency",
+        "jitter",
+        "2d_histogram",
+        "hexbin",
+        "contours"
+      ],
+      "rule": "jitter只应足够小到帮助识别重叠，不能扭曲数据位置。"
+    },
+    "redundant_coding": {
+      "definition": "同一信息使用多个视觉通道重复编码。",
+      "examples": [
+        "颜色加形状",
+        "颜色加线型",
+        "颜色加直接标注"
+      ],
+      "when_to_use": [
+        "不能只依赖颜色时",
+        "需要兼顾灰度打印时",
+        "需要兼顾色觉缺陷时"
+      ]
+    },
+    "multi_panel_figures": {
+      "types": [
+        "small_multiples",
+        "compound_figures"
+      ],
+      "critical_rule": "同类面板应尽量共享相同坐标尺度。",
+      "design_requirements": [
+        "对齐",
+        "一致性",
+        "清晰分隔",
+        "统一标注"
+      ]
+    },
+    "titles_captions_tables": {
+      "rules": [
+        "每张图都需要标题。",
+        "标题应说明图要表达的结论或主题，而不只是描述内容。",
+        "轴标题应说明变量及单位。",
+        "当需要精确数值时，表格优于图。"
+      ]
+    },
+    "balance_data_and_context": {
+      "principle": "非数据墨水不应过多，也不能少到让数据失去锚点和结构。",
+      "too_much_context": [
+        "边框过多",
+        "网格过密过重",
+        "视觉注意力被框架吸走"
+      ],
+      "too_little_context": [
+        "元素像漂浮在空中",
+        "轴和图例不清晰",
+        "难以定位数据"
+      ]
+    },
+    "larger_labels": {
+      "principle": "大多数绘图库默认字号过小，应主动调大到与图形符号平衡。"
+    },
+    "avoid_line_drawings": {
+      "principle": "尽量用实心色块而不是仅靠轮廓线勾边，尤其是柱形图、直方图和密度区域。"
+    },
+    "avoid_3d": {
+      "principle": "绝大多数3D图都会引入透视畸变和比较困难，应改成2D或分面图。",
+      "bad_cases": [
+        "3d_pie_chart",
+        "3d_bar_chart",
+        "3d_line_band",
+        "3d_scatter_when_2d_alternatives_exist"
+      ]
+    }
+  },
+  "decision_framework": {
+    "selection_priorities": [
+      "读者能否正确解码",
+      "是否突出真正要讲的结论",
+      "是否节省认知成本",
+      "是否美观"
+    ],
+    "task_to_chart": [
+      {
+        "task": "比较类别数量",
+        "recommended": [
+          "bar_plot",
+          "dot_plot"
+        ],
+        "avoid_when": [
+          "条形图从非零开始"
+        ]
+      },
+      {
+        "task": "展示单变量分布",
+        "recommended": [
+          "histogram",
+          "density_plot",
+          "ecdf"
+        ]
+      },
+      {
+        "task": "比较多组分布",
+        "recommended": [
+          "boxplot",
+          "violin_plot",
+          "ridgeline_plot"
+        ],
+        "avoid": [
+          "mean_plus_symmetric_error_bar_only"
+        ]
+      },
+      {
+        "task": "展示整体构成",
+        "recommended": [
+          "pie_chart",
+          "stacked_bar"
+        ]
+      },
+      {
+        "task": "比较多组构成",
+        "recommended": [
+          "side_by_side_bar",
+          "small_multiples"
+        ]
+      },
+      {
+        "task": "展示嵌套构成",
+        "recommended": [
+          "mosaic_plot",
+          "treemap",
+          "parallel_sets"
+        ]
+      },
+      {
+        "task": "展示两变量关系",
+        "recommended": [
+          "scatter_plot"
+        ]
+      },
+      {
+        "task": "展示多变量关系",
+        "recommended": [
+          "scatterplot_matrix",
+          "correlogram",
+          "dimension_reduction_plot"
+        ]
+      },
+      {
+        "task": "展示时间变化",
+        "recommended": [
+          "line_graph",
+          "area_chart_when_zero_baseline",
+          "small_multiples"
+        ]
+      },
+      {
+        "task": "展示趋势",
+        "recommended": [
+          "loess",
+          "moving_average",
+          "explicit_function_fit"
+        ]
+      },
+      {
+        "task": "展示地理数据",
+        "recommended": [
+          "choropleth_for_rates",
+          "cartogram_for_totals",
+          "layered_map"
+        ]
+      },
+      {
+        "task": "展示不确定性",
+        "recommended": [
+          "error_bars",
+          "confidence_band",
+          "quantile_dotplot",
+          "hop"
+        ]
+      }
+    ]
+  },
+  "anti_patterns": [
+    {
+      "name": "truncated_bar_chart",
+      "description": "条形图未从0开始，违反比例墨水原则。"
+    },
+    {
+      "name": "3d_chart",
+      "description": "3D饼图、3D柱图、3D线图会制造透视误导。"
+    },
+    {
+      "name": "nonzero_baseline_area_chart",
+      "description": "面积图若不以0为基线，会误导对高度和面积的感知。"
+    },
+    {
+      "name": "rainbow_scale_for_continuous_data",
+      "description": "彩虹色带会制造虚假边界和顺序感知问题。"
+    },
+    {
+      "name": "too_many_colors_for_categories",
+      "description": "一个图用十几个颜色区分类别会让图例匹配失败。"
+    },
+    {
+      "name": "legend_dependency_overload",
+      "description": "必须来回频繁对照图例才能读懂图。"
+    },
+    {
+      "name": "inconsistent_scales_in_small_multiples",
+      "description": "多面板图各自使用不同坐标范围却未明确说明。"
+    },
+    {
+      "name": "unspecified_error_bars",
+      "description": "误差线未说明表示SD、SE还是CI。"
+    },
+    {
+      "name": "default_tiny_labels",
+      "description": "完全使用默认小字号导致图可以看见却读不清。"
+    },
+    {
+      "name": "outline_only_histograms_or_bars",
+      "description": "仅用轮廓线会削弱形状和面积感知。"
+    },
+    {
+      "name": "unhandled_overplotting",
+      "description": "点大量重叠却没有透明度、抖动或分箱。"
+    },
+    {
+      "name": "choropleth_for_raw_totals",
+      "description": "用区域颜色直接表示总量，忽略面积与人口结构偏差。"
+    },
+    {
+      "name": "overinterpreted_smoother",
+      "description": "把默认平滑曲线当作数据真实机制。"
+    }
+  ],
+  "review_checklist": {
+    "mapping": [
+      "每个视觉属性对应了什么变量？",
+      "连续变量是否映射到了适合连续比较的通道？",
+      "类别变量是否避免了伪顺序？"
+    ],
+    "proportionality": [
+      "条、面积、阴影长度是否与数据成比例？",
+      "是否违反比例墨水原则？"
+    ],
+    "comparison_task": [
+      "读者比较的是位置、长度、面积、角度还是体积？",
+      "能否改成更容易比较的位置编码？"
+    ],
+    "color": [
+      "颜色是在区分类别、表示数值，还是高亮重点？",
+      "色带类型是否与任务匹配？",
+      "是否考虑色觉缺陷？"
+    ],
+    "labels_and_context": [
+      "标题是否表达结论或主题？",
+      "轴标题是否包含变量和单位？",
+      "字号是否足够大？",
+      "网格、边框和图例是否适量？"
+    ],
+    "audience": [
+      "目标读者是专家还是大众？",
+      "是否需要更直观的不确定性表达？",
+      "是否应该直接标注而不是依赖图例？"
+    ],
+    "story": [
+      "这张图究竟要证明什么？",
+      "它在整套叙事中是背景、挑战还是结论？"
+    ]
+  },
+  "high_value_takeaways": [
+    "位置是最强编码方式，面积、角度和体积都更弱。",
+    "条形图在线性尺度上必须从0开始。",
+    "饼图不是绝对错误，但只适合少数简单场景。",
+    "不要只用颜色传达关键信息。",
+    "不要把默认平滑结果当作唯一真实趋势。",
+    "多面板图若尺度不一致，极易误导。",
+    "大多数字体默认都太小。",
+    "轮廓线图通常不如实心图形清楚。",
+    "绝大多数3D图都应该改成2D。",
+    "不确定性必须明确表达，而且要解释表达的是什么。"
+  ],
+  "ai_prompt_templates": {
+    "chart_selection": "你是数据可视化顾问。请根据以下数据结构和表达目标，为我选择最合适的静态图表类型。请按“推荐图 / 备选图 / 不推荐图 / 选择理由 / 主要风险 / 设计建议”输出。数据结构: {data_structure} 表达目标: {goal} 受众: {audience} 是否需要强调不确定性: {uncertainty} 使用场景: {context}",
+    "chart_review": "请按《Fundamentals of Data Visualization》的原则审查这张图。从以下维度输出: 1. 是否数学上正确 2. 是否感知上清晰 3. 是否存在误导风险 4. 颜色是否合理 5. 标签和上下文是否充分 6. 若重画，推荐改成什么形式。",
+    "style_guide_generation": "请基于《Fundamentals of Data Visualization》的原则，为一个数据分析团队制定静态图表规范。输出结构: 总原则、图表类型选择规则、颜色规范、标签规范、多面板规范、不确定性表达规范、明确禁止的反模式。"
+  }
+}
