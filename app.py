@@ -165,10 +165,10 @@ def build_ranking_figure(df: pd.DataFrame) -> go.Figure:
         hovermode="y unified",
         height=780,
         margin={"l": 130, "r": 120, "t": 150, "b": 100},
-        xaxis_title="Payment Amount (CNY)",
-        yaxis_title="Month",
+        xaxis_title="Total Payment (CNY)",
     )
     figure.update_xaxes(
+        title_text="Total Payment (CNY)",
         tickfont={"size": 16},
         title_font={"size": 22},
         tickprefix=CNY_SYMBOL,
@@ -176,8 +176,9 @@ def build_ranking_figure(df: pd.DataFrame) -> go.Figure:
         range=[0, x_max * 1.33],
     )
     figure.update_yaxes(
+        title_text=None,
         tickfont={"size": 17},
-        title_font={"size": 22},
+        title_font={"size": 24},
         categoryorder="array",
         categoryarray=ranking_df["MonthLabel"][::-1],
     )
@@ -366,6 +367,7 @@ def summary_cards(df: pd.DataFrame) -> html.Div:
 df = load_monthly_data()
 app = Dash(__name__)
 app.title = "Alipay Monthly Dashboard"
+server = app.server
 
 app.layout = html.Div(
     [
